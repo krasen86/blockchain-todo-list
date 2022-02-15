@@ -17,4 +17,6 @@ Run *truffle compile*
 
 Start ganache and check the dev-server port. Make sure to update the port in the truffle-config file to match that of ganache dev server
 
+You can use MetaMask to connect to the ganache blockchain from the browser
+
 Inspired by the FreeCodeCamp course
