@@ -60,6 +60,8 @@ App = {
 
         $("#account").html(App.account);
 
+        await App.renderTasks();
+
         App.setLoading(false);
     },
     setLoading: (boolean) => {
@@ -73,6 +75,32 @@ App = {
         else {
             loader.hide();
             content.show();
+        }
+    },
+    renderTasks: async () => {
+        const taskCount = await App.todoList.taskCount();
+        const taskTemplate = $(".taskTemplate");
+
+        for (let i = 1; i <= taskCount; i++) {
+            const task = await App.todoList.tasks(i);
+            const taskID = task[0].toNumber();
+            const taskContent = task[1];
+            const taskCompleted = task[2];
+
+            const newTask = taskTemplate.clone();
+            newTask.find(".content").html(taskContent);
+            newTask.find("input")
+                .prop("name", taskID)
+                .prop("checked", taskCompleted)
+                //.on("click", App.toggleCompleted);
+            if (taskCompleted) {
+                $("#completedTaskList").append(newTask);
+            }
+            else {
+                $("#taskList").append(newTask);
+            }
+
+            newTask.show();
         }
     }
 }
